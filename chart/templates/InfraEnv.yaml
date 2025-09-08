@@ -4,6 +4,7 @@
 {{- $ntpsources := .Values.hypershift.additionalNTPSources | default list }}
 {{- $proxy := .Values.proxy | default dict }}
 {{- $nodepoolconfigs := .Values.hypershift.nodePoolConfigs }}
+{{- $osImageVersion := .Values.hypershift.osImageVersion }}
 {{- range .Values.compute }}
 {{- $poolconfig:= dict }}
 {{- $poolname := .name }}
@@ -20,7 +21,7 @@ metadata:
   annotations:
     helm.sh/hook-weight: "10"
 spec:
-  osImageVersion: "{{ $poolconfig.osImageVersion | default $osversion }}"
+  osImageVersion: "{{ $osImageVersion | default $osversion }}"
   sshAuthorizedKey: "{{ $sshkey | trim }}"
   pullSecretRef:
     name: assisted-deployment-pull-secret
